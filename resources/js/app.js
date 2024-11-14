@@ -4,10 +4,11 @@ if (role === "user") {
     window.Echo.private('App.Models.User.' + userId)
         .notification((event) => {
             console.log(event.username)
+            let link = postRoute.replace(':slug', event.post_slug )+'?notify='+event.id;
             $('#push_notification').prepend(`
         <div class="dropdown-item d-flex justify-content-between align-items-center">
             <span class="dropdown-item">comment by: ${event.username} </span>
-            <a href="${event.link}?notify=${event.id}"><i class="fas fa-eye"></i></a>
+            <a href="${link}"><i class="fas fa-eye"></i></a>
         </div>
         `)
             var count = Number($('#num_Notifi').text());

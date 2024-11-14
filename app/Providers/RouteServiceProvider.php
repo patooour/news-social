@@ -20,14 +20,10 @@ class RouteServiceProvider extends ServiceProvider
     public const HOME = '/';
     public const ADMIN_HOME = 'admin/home';
 
-    /**
-     * Define your route model bindings, pattern filters, and other route configuration.
-     */
+
     public function boot(): void
     {
-        RateLimiter::for('api', function (Request $request) {
-            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
-        });
+      $this->configureRateLimiting();
 
         $this->routes(function () {
             Route::middleware('api')
@@ -39,6 +35,33 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::middleware('web')
                 ->group(base_path('routes/admin.php'));
+        });
+    }
+    protected function configureRateLimiting()
+    {
+        RateLimiter::for('api', function (Request $request) {
+            return Limit::perMinute(3)->by($request->user()?->id ?: $request->ip())->response(function (){
+                return apiSuccessResponse(429 , 'try again after 1 min');
+            });
+
+        });
+        RateLimiter::for('contact', function (Request $request) {
+            return Limit::perMinute(1)->by( $request->ip())->response(function (){
+                return apiSuccessResponse(429 , 'try again after 1 min');
+            });
+
+        });
+        RateLimiter::for('login', function (Request $request) {
+            return Limit::perMinute(3)->by( $request->ip())->response(function (){
+                return apiSuccessResponse(429 , 'try again after 1 min');
+            });
+
+        });
+        RateLimiter::for('login-web', function (Request $request) {
+            return Limit::perMinute(3)->by( $request->ip())->response(function (){
+                abort(404);
+            });
+
         });
     }
 }

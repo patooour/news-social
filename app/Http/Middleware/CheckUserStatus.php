@@ -20,6 +20,10 @@ class CheckUserStatus
         if (Auth::guard('web')->check() && Auth::guard('web')->user()->status == 0) {
             return redirect()->route('fronted.wait');
         }
+        if (Auth::guard('sanctum')->check() && Auth::guard('sanctum')->user()->status == 0) {
+            Auth::guard('sanctum')->user()->currentAccessToken()->delete();
+            return apiSuccessResponse(403 , 'you are blocked ');
+        }
         return $next($request);
     }
 }

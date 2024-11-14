@@ -124,7 +124,7 @@
                                 <div class="dropdown-item d-flex justify-content-between align-items-center">
                                     <span class="dropdown-item"> new comment by: {{$notify->data['username']}}</span>
 
-                                    <a href="{{$notify->data['link']}}?notify={{$notify->id}}"><i class="fas fa-eye"></i></a>
+                                    <a href="{{ route('fronted.post.show' ,$notify->data['post_slug']) }}?notify={{$notify->id}}  "><i class="fas fa-eye"></i></a>
                                 </div>
 
                             </div>

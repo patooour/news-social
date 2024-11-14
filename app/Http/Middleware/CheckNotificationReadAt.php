@@ -18,8 +18,13 @@ class CheckNotificationReadAt
     {
 
         if ($request->query('notify')){
-            $notify = Auth::user()->unreadNotifications()
-                ->where('id', $request->query('notify'))->first();
+            if (auth()->guard('sanctum')->check()){
+                $notify = Auth::guard('sanctum')->user()->unreadNotifications()
+                    ->where('id', $request->query('notify'))->first();
+            }else{
+                $notify = Auth::guard('web')->user()->unreadNotifications()
+                    ->where('id', $request->query('notify'))->first();
+            }
 
             if ($notify){
                 $notify->markAsRead();

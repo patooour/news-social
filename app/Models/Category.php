@@ -35,4 +35,9 @@ class Category extends Model
             ]
         ];
     }
+
+    public function status()
+    {
+        return $this->status == 1 ? 'Active' : 'Not Active';
+    }
 }

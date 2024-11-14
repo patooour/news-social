@@ -31,4 +31,16 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'google'=>[
+        'client_id' => env('GITHUB_CLIENT_ID' , '1043791733331-0u6dthdf86lvf047plcfsqrgnf84scj4.apps.googleusercontent.com'),
+        'client_secret' => env('GITHUB_CLIENT_SECRET','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'),
+        'redirect' => 'http://127.0.0.1:8000/auth/google/callback',
+    ]
+    ,
+    'facebook'=>[
+        'client_id' => '8253709214751715',
+        'client_secret' => '8a340c62c3463a4c9c9e176ce900c16b',
+        'redirect' => 'http://127.0.0.1:8000/auth/facebook/callback',
+    ]
+
 ];

@@ -34,7 +34,7 @@ Notification
                 </div>
              @forelse(Auth::user()->unreadNotifications()->take(5)->get() as $notify)
 
-                    <a href="{{$notify->data['link']}}?notify={{$notify->id}}">
+                    <a href="{{route('fronted.post.show' ,$notify->data['post_slug'])}}?notify={{$notify->id}}">
                         <div class="notification alert alert-info">
                             <strong>{{$notify->data['username']}}</strong>
 

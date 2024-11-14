@@ -30,6 +30,7 @@ Login
                                         <div class="form-group">
                                             <input type="email"  name="email" class="form-control form-control-user"
                                                    id="exampleInputEmail" aria-describedby="emailHelp"
+                                                   value="{{old('email')}}"
                                                    placeholder="Enter Email Address...">
                                         </div>
                                         <div class="form-group">

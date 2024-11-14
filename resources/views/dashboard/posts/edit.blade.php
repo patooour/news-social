@@ -33,7 +33,7 @@
                             <div class="col-sm-12 mb-1 ">
                                 <input type="text" value="{{ @old('title' , $post->title) }}" name="title"
                                        class="form-control form-control-range" id="exampleFirstName"
-                                       placeholder="Enter Title Post">
+                                       placeholder="Enter Title Post" >
                                 @error('title')
                                 <strong class="text-danger">
                                     {{$message}}

@@ -80,9 +80,10 @@
     <script>
         userId = {{auth()->user()->id}};
         role = "user";
+        postRoute = "{{ route('fronted.post.show' ,':slug') }}"
     </script>
 @endauth
-<script src="{{asset('build/assets/app-COfq36r1.js')}}"></script>
+<script src="{{asset('build/assets/app-gbcHGki2.js')}}"></script>
 <!-- Back to Top -->
 <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
 

@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
 
-         /*   AuthorizationSeeder::class,
+         /*  AuthorizationSeeder::class,
             AdminSeeder::class,
             UserSeeder::class,
             CategorySeeder::class,
@@ -34,8 +34,8 @@ class DatabaseSeeder extends Seeder
             CommentSeeder::class,
             ContactSeeder::class,*/
             ImageSeeder::class,
-        /*    RelatedSiteSeeder::class,*/
-            CommentSeeder::class,
+         /*  RelatedSiteSeeder::class,
+            CommentSeeder::class,*/
             ]);
     }
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\VerificationController;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,9 @@ Route::redirect('/' ,'/home');
 
 
 Route::group(['prefix' => '/',], function (){
+    Route::fallback(function (){
+       return response()->view('errors.404');
+    });
 Route::get('home',[\App\Http\Controllers\frontend\HomeController::class , 'index'])->name('fronted.index');
 Route::get('category/{slug}',[\App\Http\Controllers\frontend\CategoryController::class, '__invoke' ])->name('fronted.category.posts');
 
@@ -102,6 +106,9 @@ Route::controller(VerificationController::class)
         Route::post('resend', ['resend'])->name('resend');
     });
 
+
+Route::get('/auth/{provider}/redirect', [\App\Http\Controllers\SocialLoginController::class , 'redirect'])->name('auth.google.redirect');
+Route::get('/auth/{provider}/callback', [\App\Http\Controllers\SocialLoginController::class , 'callback'])->name('auth.google.callback');
 
 
 // end customize route verify laravel ui

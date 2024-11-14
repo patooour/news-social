@@ -131,7 +131,7 @@
                         @foreach($category_posts as $post)
                             <div class="col-md-4">
                                 <div class="sn-img">
-                                    <img src="{{asset($post->images->first()->path)}}" class="img-fluid" alt="{{$post->title}}" />
+                                    <img src="{{asset($post->images->first()->path) ?? '#'}}" class="img-fluid" alt="{{$post->title}}" />
                                     <div class="sn-title">
                                         <a href="{{route('fronted.post.show',$post->slug)}}">{{$post->title}}</a>
                                     </div>
@@ -150,7 +150,7 @@
                             @foreach($category_posts as $post)
                                <div class="nl-item">
                                     <div class="nl-img">
-                                        <img src="{{asset($post->images->first()->path)}}" />
+                                        <img src="{{asset($post->images->first()->path) ?? '#'}}" />
                                     </div>
                                     <div class="nl-title">
                                         <a href="{{route('fronted.post.show',$post->slug)}}"

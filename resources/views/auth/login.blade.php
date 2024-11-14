@@ -64,8 +64,23 @@
                                     </a>
                                 @endif
                             </div>
+
+                        </div>
+                        <div class="row mb-0">
+                            {!! NoCaptcha::display() !!}
+                        </div>
+                        <div class="row mb-0">
+                            @if ($errors->has('g-recaptcha-response'))
+                                <span class="help-block">
+                                     <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                                  </span>
+                            @endif
                         </div>
                     </form>
+                    <a style="margin-left: 200px" href="{{route('auth.google.redirect' , 'google')}}"
+                       class="my-4 btn btn-primary">login with Google <i class="fa fa-google-drive"></i></a>
+                    <a style="margin-left: 200px" href="{{route('auth.google.redirect' , 'facebook')}}"
+                       class="my-1 btn btn-info">login with Facebook <i class="fa fa-facebook-messenger"></i></a>
                 </div>
             </div>
         </div>
@@ -74,3 +89,9 @@
 
 <br><br><br><br>
 @endsection
+
+@push('script')
+
+        {!! NoCaptcha::renderJs() !!}
+
+@endpush

@@ -51,8 +51,7 @@ class imageManager
     {
 
         if ($request->hasFile('image')) {
-
-            //delete image from locale
+            //delete image from locale if exist
             self::deleteImageFromLocale($user->image);
             $path = self::uploadImage($request, $user->username, $folder);
 

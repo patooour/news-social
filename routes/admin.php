@@ -12,9 +12,11 @@ use App\Http\Controllers\Admin\Dashboard\Notification\NotificationController;
 use App\Http\Controllers\Admin\Dashboard\Post\PostController;
 use App\Http\Controllers\Admin\Dashboard\Profile\ProfileController;
 use App\Http\Controllers\Admin\Dashboard\Search\GeneralSearchController;
+use App\Http\Controllers\Admin\Dashboard\setting\RelatedSiteController;
 use App\Http\Controllers\Admin\Dashboard\Setting\SettingController;
 use App\Http\Controllers\Admin\Dashboard\Users\UserController;
 use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Middleware\CheckAdminStatus;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 
@@ -31,9 +33,16 @@ use Illuminate\Support\Facades\Route;
 
 
 // auth routes
+Route::get('/wait', function () {
+    return view('dashboard.common.wait');
+})->name('admin.wait');
 
 
 Route::group(['prefix'=>'admin', 'as' => 'admin.'], function(){
+
+    Route::fallback(function (){
+        return response()->view('errors.404');
+    });
 
     Route::controller(loginController::class)->group(function () {
         Route::get('Login',  'showLoginForm')->name('login.show');
@@ -60,7 +69,7 @@ Route::group(['prefix'=>'admin', 'as' => 'admin.'], function(){
 
 
 
-Route::group(['prefix'=>'admin' , 'middleware'=>['auth:admin'] , 'as' => 'admin.'],
+Route::group(['prefix'=>'admin' , 'middleware'=>['auth:admin' , 'CheckAdminStatus'] , 'as' => 'admin.'],
     function(){
         Route::get('home', [HomeController::class ,'index'])->name('home');
 
@@ -70,6 +79,7 @@ Route::group(['prefix'=>'admin' , 'middleware'=>['auth:admin'] , 'as' => 'admin.
 
 ##################### Resource Controller ########################################
         Route::resource('authorizations' , AuthorizationController::class);
+        Route::resource('relatedSite' , RelatedSiteController::class);
         Route::resource('users' , UserController::class);
         Route::resource('categories' , CategoryController::class);
         Route::resource('posts' , PostController::class);
@@ -88,6 +98,9 @@ Route::group(['prefix'=>'admin' , 'middleware'=>['auth:admin'] , 'as' => 'admin.
             Route::post('/' , 'update')->name('update');
 
         });
+
+
+
         Route::controller(ContactController::class)->prefix('contacts')->name('contacts.')->group(function () {
             Route::get('' , 'index')->name('index');
             Route::get('/contacts/{id}' , 'show')->name('show');

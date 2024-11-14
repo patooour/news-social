@@ -8,7 +8,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
 
-class NewCommentNotify extends Notification
+class NewCommentNotify extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -61,7 +61,7 @@ class NewCommentNotify extends Notification
                 'post_title'=>$this->post->title,
                 'comment'=>$this->comment->comment,
                 'username'=>Auth::user()->name,
-                'link'=>route('fronted.post.show',$this->post->slug),
+                'post_slug'=>$this->post->slug,
                 ];
     }
     public function toBroadcast(object $notifiable)
@@ -72,7 +72,7 @@ class NewCommentNotify extends Notification
             'post_title'=>$this->post->title,
             'comment'=>$this->comment->comment,
             'username'=>Auth::user()->name,
-            'link'=>route('fronted.post.show',$this->post->slug),
+            'post_slug'=>$this->post->slug,
         ];
     }
 

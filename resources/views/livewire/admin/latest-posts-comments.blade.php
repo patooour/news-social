@@ -23,9 +23,16 @@
                         <tbody>
                         @forelse($latest_posts as $k => $post)
                             <tr>
-                                <td><a href="{{route('admin.posts.show',$post->id)}}">
-                                        {{$post->title}}
-                                    </a></td>
+                                <td>
+                                     @can('posts')
+                                        <a href="{{route('admin.posts.show',$post->id)}}">
+                                            {{$post->title}}
+                                        </a>
+                                       @endcan
+                                       @cannot('posts')
+                                           {{$post->title}}
+                                       @endcannot
+                                </td>
                                 <td>{{$post->category->name}}</td>
                                 <td>{{$post->comments_count}}</td>
                                 <td style="@if($post->status == 1) color:green ; font-weight: bold @endif">{{$post->status ==1 ? 'Active' :'Not Active'}}</td>
@@ -75,9 +82,15 @@
                             <tr>
                                 <td>{{$comment->user->name}}</td>
                                 <td>
-                                    <a href="{{route('admin.posts.show',$comment->post->id)}}">
-                                    {{\Illuminate\Support\Str::limit($comment->post->title , 20)}}
-                                    </a>
+                                    @can('posts')
+                                        <a href="{{route('admin.posts.show',$comment->post->id)}}">
+                                            {{\Illuminate\Support\Str::limit($comment->post->title , 20)}}
+                                        </a>
+                                    @endcan
+                                    @cannot('posts')
+                                        {{$comment->post->title}}
+                                    @endcannot
+
                                 </td>
                                 <td>{{\Illuminate\Support\Str::limit($comment->comment , 50)}}</td>
                                 <td style="@if($comment->status == 1) color:green; font-weight: bold @else color:red; @endif">{{$comment->status ==1 ? 'Active' :'Not Active'}}</td>

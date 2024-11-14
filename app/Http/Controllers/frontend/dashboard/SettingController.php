@@ -22,7 +22,6 @@ class SettingController extends Controller
 
     public function update(SettingRequest $request)
     {
-
         $request->validated();
         $user = User::findorfail(Auth::user()->id);
         $user->update($request->except(['_token' , 'image']));

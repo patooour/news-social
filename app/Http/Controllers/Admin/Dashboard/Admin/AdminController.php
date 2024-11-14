@@ -87,12 +87,19 @@ class AdminController extends Controller
      */
     public function update(AdminRequest $request, string $id)
     {
+
         $request->validated();
-        $request->merge([
-            'password'=>bcrypt($request->password)
-        ]);
+        if ($request->filled('password')) {
+            $request->merge([
+                'password' => bcrypt($request->password)
+            ]);
+        }else{
+            $request->request->remove('password');
+            $request->request->remove('password_confirmation');
+        }
+
         $admin = Admin::findorfail($id);
-        $admin = $admin->update($request->except('_token'));
+        $admin = $admin->update($request->except('_token' ));
         if (!$admin){
             return redirect()->back()->withErrors('try again later');
         }

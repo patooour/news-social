@@ -64,7 +64,9 @@
         <!-- End of Main Content -->
 
         <!-- Footer -->
-      {{--  @include('dashboard.common.footer')--}}
+{{--
+        @include('dashboard.common.footer')
+--}}
         <!-- End of Footer -->
 
     </div>
@@ -87,7 +89,7 @@
        var  role = "admin";
     </script>
 
-<script src="{{asset('build/assets/app-COfq36r1.js')}}"></script>
+<script src="{{asset('build/assets/app-PH_ljUXH.js')}}"></script>
 
 
 <!-- Bootstrap core JavaScript-->

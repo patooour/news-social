@@ -42,6 +42,9 @@ Setting
                 <div class="form-group">
                     <label for="profile-image">Profile Image:</label>
                     <input type="file" name="image" id="profile-image" accept="image/*" />
+                    <div class="form-group">
+                        <img id="profile_image" src="{{asset($user->image)}}" class="img-thumbnail" alt="" width="180px">
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="country">Country: </label>
@@ -116,3 +119,20 @@ Setting
 
     <br> <br>
 @endsection
+
+@push('script')
+    <script>
+        $(document).on('change' , '#profile-image' ,function (e){
+           e.preventDefault();
+                var file = this.files[0];
+
+           if(file){
+                var reader = new FileReader();
+                reader.onload = function (e){
+                    $('#profile_image').attr('src' , e.target.result)
+                }
+               reader.readAsDataURL(file);
+           }
+        });
+    </script>
+@endpush

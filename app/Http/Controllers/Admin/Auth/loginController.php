@@ -26,14 +26,23 @@ class loginController extends Controller
       $result =  auth('admin')->attempt([
            'email'=>$request->get('email'),
            'password'=>$request->get('password')] , $request->get('remember_me'));
-    if (!$result){
+      if (!$result){
         return redirect()->back()->withInput($request->only('email', 'remember_me'))
             ->withErrors(['error'=>'credendiales incorrectas']);
     }
+      /*if (auth('admin')->user()->status == 0){
+          auth('admin')->logout();
+          return redirect()->back()->withInput($request->only('email', 'remember_me'));
+      }*/
+        $role = auth('admin')->user()->role->permissions;
+      $first_role = $role[0];
 
-    return redirect(RouteServiceProvider::ADMIN_HOME);
+      if (in_array('home' ,$role)){
+          return redirect()->intended(RouteServiceProvider::ADMIN_HOME);
+      }else{
+          return redirect()->intended('admin/'.$first_role);
 
-
+      }
     }
 
     public function logout(Request $request)

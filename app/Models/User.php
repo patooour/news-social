@@ -23,6 +23,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'username',
+        'google_id',
+        'email_verified_at',
         'image',
         'country',
         'city',
@@ -68,6 +70,10 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function scopeActive($query){
         return $query->where('status', 1);
+    }
+    public function status()
+    {
+        return $this->status == 1 ? 'Active' : 'Not Active';
     }
 
 }

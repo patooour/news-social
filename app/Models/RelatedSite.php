@@ -11,4 +11,15 @@ class RelatedSite extends Model
 
     protected $table = 'related_sites';
     protected $fillable = ['name', 'url','created_at','updated_at'];
+
+    public static function filterRequest() :array
+    {
+        return [
+            'name'=> 'required|string|min:3|max:50',
+            'url'=> 'required|url',
+        ];
+    }
+
+
+
 }

@@ -21,15 +21,21 @@ class PostRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $data =  [
             'title' => 'required|string|min:3|max:50',
             'desc' => 'required|min:10',
             'small_desc' => 'required|min:30|max:170',
             'category_id' => 'required|exists:categories,id',
             'comment_able' => 'in:on,off,1,0',
             'status' => 'nullable|in:0,1',
-            'image' => 'nullable',
+
             'image.*' => 'mimes:jpeg,png,jpg,gif,svg,webp,JPG,JPEG,PNG|max:3000'
         ];
+        if (request()->is('api/account/posts/update/*')){
+            $data['image'] = 'nullable';
+        }else{
+            $data['image'] = 'required';
+        }
+        return $data;
     }
 }
